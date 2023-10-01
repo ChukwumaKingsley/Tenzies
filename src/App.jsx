@@ -4,8 +4,18 @@ import Die from './Die'
 
 function App() {
 
-  const setAllNewDie = () =>
-    Array.from({ length: 10 }, () => Math.floor(Math.random() * 6) + 1);
+
+  function setAllNewDie() {
+    const newDices = [];
+    for (let i=0; i<10; i++){
+      newDices.push({
+        id: i+1,
+        value: Math.floor(Math.random() * 6) + 1,
+        isHeld: false
+      })
+    }
+    return newDices
+  }
 
   const [allDie, setAllDie] = useState(setAllNewDie());
   function rollDice() {
@@ -15,8 +25,8 @@ function App() {
   return (
     <main>
       <div className='die-container'>
-      {allDie.map((value, index) => (
-                    <Die key={index} val={value} />
+      {allDie.map((die) => (
+                    <Die key={die.id} val={die.value} />
                     ))}
       </div>
       <button type='button' onClick={rollDice} className='roll-dice'>Roll</button>
