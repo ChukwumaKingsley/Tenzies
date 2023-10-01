@@ -3,10 +3,14 @@ import './App.css'
 import Die from './Die'
 
 function App() {
+
   const setAllNewDie = () =>
     Array.from({ length: 10 }, () => Math.floor(Math.random() * 6) + 1);
 
   const [allDie, setAllDie] = useState(setAllNewDie());
+  function rollDice() {
+    setAllDie(setAllNewDie())
+  }
 
   return (
     <main>
@@ -15,6 +19,7 @@ function App() {
                     <Die key={index} val={value} />
                     ))}
       </div>
+      <button type='button' onClick={rollDice} className='roll-dice'>Roll</button>
     </main>
   )
 }

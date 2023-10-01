@@ -57,3 +57,19 @@ main {
   font-size: 20px;
   cursor: pointer;
 }
+
+.roll-dice {
+  text-align: center;
+  width: 92px;
+  height: 36px;
+  padding: 10px;
+  background: #5035FF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 27px;
+  font-size: 16px; 
+  display: flex;
+  justify-content: center; /* Center text horizontally */
+  align-items: center; /* Center text vertically */
+}
