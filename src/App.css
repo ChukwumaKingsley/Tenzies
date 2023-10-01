@@ -55,4 +55,5 @@ main {
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
   font-size: 20px;
+  cursor: pointer;
 }
