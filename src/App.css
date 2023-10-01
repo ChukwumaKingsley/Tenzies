@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #0B2434;
+  /* padding: 2px; */
+}
+
+main {
+  background-color: #F5F5F5;
+  height: 600%;
+  width: 600%;
+  max-width: 800px;
+  border-radius: 5px;
+  display: flex;
+  width: 360px;
+  height: 379px;
+  padding: 30px 20px 29px 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
