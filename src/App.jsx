@@ -37,25 +37,28 @@ function App() {
       const newDie = die.id === id ? {...die, isHeld: !die.isHeld} : die
       return newDie
     }))
+    checkBestScore()
   }
+
   function checkBestScore() {
+    var check = 0
     for (let i=0; i<10; i++) {
-      const check = 0
-      if (allDie[i].isHeld && allDie[i] === targetNumber){
-        check += 1
+      if (allDie[i].isHeld && allDie[i].value == targetNumber){
+        check = check + 1
       }
-    if (check === 10) {
+    }
+    if (check == 10) {
       setBestScore((score) => {
         const bestScore = score === '' ? rolls : (score > rolls ? rolls : score)
       return bestScore
     })
       setTargetNumber(Math.floor(Math.random() * 6) + 1)
       setAllDie(setAllNewDie())
-    }
+      setRolls(0)
     }
   }
 
-  checkBestScore()
+  // checkBestScore()
 
   const diceElements = allDie.map((die) => (
     <Die key={die.id} id={die.id} val={die.value} isHeld={die.isHeld} onClick={() => holdDice(die.id)}/>
