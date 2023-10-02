@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { nanoid } from 'nanoid';
 import './App.css'
 import Die from './Die'
@@ -7,67 +7,71 @@ function App() {
 
   const [targetNumber, setTargetNumber] = useState(Math.floor(Math.random() * 6) + 1)
   const [rolls, setRolls] = useState(0)
+  const [dice, setDice] = useState(newDice());
   const [bestScore, setBestScore] = useState('')
+  const [tenzies, setTenzies] = useState(false)
+
+
+  useEffect(
+    function checkBestScore() {
+      console.log('ran')
+      var check = 0
+      for (let i=0; i<10; i++) {
+        if (dice[i].isHeld && dice[i].value == targetNumber){
+          check = check + 1
+        }
+      }
+      if (check == 10) {
+        setBestScore((score) => {
+          const bestScore = score === '' ? rolls : (score > rolls ? rolls : score)
+        return bestScore
+        })
+        setTargetNumber(Math.floor(Math.random() * 6) + 1)
+        setDice(newDice())
+        setTenzies(true)
+        setRolls(0)
+    }}, [dice])
 
 
 
-  function setAllNewDie() {
-    const newDices = [];
-    for (let i=0; i<10; i++){
-      newDices.push({
-        id: nanoid(),
-        value: Math.floor(Math.random() * 6) + 1,
-        isHeld: false
-      })
-    }
-    return newDices
+  function newDice() {
+  const newDices = [];
+  for (let i=0; i<10; i++){
+    newDices.push({
+      id: nanoid(),
+      value: Math.floor(Math.random() * 6) + 1,
+      isHeld: false
+    })
   }
+  return newDices
+}
 
-  const [allDie, setAllDie] = useState(setAllNewDie());
+
   function rollDice() {
     setRolls(roll => roll+1)
-    setAllDie(prev => prev.map((die) => {
+    setDice(prev => prev.map((die) => {
       const newDie = die.isHeld === true ? die : {...die, value: Math.floor(Math.random() * 6) + 1}
       return newDie
     }))
   }
 
   function holdDice(id) {
-    setAllDie(prev => prev.map((die) => {
+    setDice(prev => prev.map((die) => {
       const newDie = die.id === id ? {...die, isHeld: !die.isHeld} : die
       return newDie
     }))
-    checkBestScore()
   }
 
-  function checkBestScore() {
-    var check = 0
-    for (let i=0; i<10; i++) {
-      if (allDie[i].isHeld && allDie[i].value == targetNumber){
-        check = check + 1
-      }
-    }
-    if (check == 10) {
-      setBestScore((score) => {
-        const bestScore = score === '' ? rolls : (score > rolls ? rolls : score)
-      return bestScore
-    })
-      setTargetNumber(Math.floor(Math.random() * 6) + 1)
-      setAllDie(setAllNewDie())
-      setRolls(0)
-    }
-  }
-
-  // checkBestScore()
-
-  const diceElements = allDie.map((die) => (
+  
+  const diceElements = dice.map((die) => (
     <Die key={die.id} id={die.id} val={die.value} isHeld={die.isHeld} onClick={() => holdDice(die.id)}/>
     ))
  
 
   return (
     <main>
-      <div>How many times do you have to roll to get all numbers as {targetNumber}</div>
+      <h2>Tenzies</h2>
+      <div>Roll until all dice are <b>{targetNumber}</b>. Click a die to freeze it at its current value between rools.</div>
       <div className='scores'>
         <span className='score'> Rolls: {rolls}</span>
         <span className='best-score'> Bestscore: {bestScore} </span>
