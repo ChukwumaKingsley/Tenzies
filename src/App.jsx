@@ -14,23 +14,13 @@ function App() {
 
   useEffect(
     function checkBestScore() {
-      console.log('ran')
-      var check = 0
-      for (let i=0; i<10; i++) {
-        if (dice[i].isHeld && dice[i].value == targetNumber){
-          check = check + 1
-        }
-      }
-      if (check == 10) {
-        setBestScore((score) => {
-          const bestScore = score === '' ? rolls : (score > rolls ? rolls : score)
-        return bestScore
-        })
+      const winCondition = dice.every(die => die.isHeld === true && die.value === targetNumber)
+      if (winCondition) {
         setTargetNumber(Math.floor(Math.random() * 6) + 1)
         setDice(newDice())
         setTenzies(true)
         setRolls(0)
-    }}, [dice])
+      }}, [dice])
 
 
 
