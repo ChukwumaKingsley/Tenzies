@@ -73,11 +73,14 @@ function App() {
 
   return (
     <main>
-      <h2>Tenzies</h2>
-      <div>Roll until all dice are <b>{targetNumber}</b>. Click a die to freeze it at its current value between rolls.</div>
+      <h2 className='title'>Tenzies</h2>
+      <div className='instructions'>Roll until all dice are of the target number. Click a die to freeze it at its current value between rolls.</div>
+      <div className='game-numbers'>
+        <span className='target-value'>Target value: {targetNumber}</span>
       <div className='scores'>
-        <span className='score'> Rolls: {rolls}</span>
-        <span className='best-score'> Bestscore: {bestScore} </span>
+        <p className='score'> Rolls: {rolls}</p>
+        <p className='best-score'> Bestscore: {bestScore} </p>
+      </div>
       </div>
       <div className='die-container'>
         {diceElements}
